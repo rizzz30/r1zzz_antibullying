@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUANG AMAN — SMK AN-NUR Pasirputih, Depok</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* CSS Variables & Design System */
+        :root {
+            --primary: #0F172A;
+            /* Deep Navy */
+            --primary-light: #1E293B;
+            --secondary: #0D9488;
+            /* Teal */
+            --secondary-hover: #0F766E;
+            --accent: #38BDF8;
+            /* Soft Blue */
+            --bg: #F8FAFC;
+            /* Off White */
+            --card: #FFFFFF;
+            --text: #0F172A;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary: #F8FAFC;
+            --primary-light: #E2E8F0;
+            --secondary: #14B8A6;
+            --secondary-hover: #0D9488;
+            --accent: #38BDF8;
+            --bg: #0B0F19;
+            /* Deep Dark */
+            --card: #111827;
+            --text: #F8FAFC;
+            --text-muted: #9CA3AF;
+            --border: #1F2937;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        [data-theme="dark"] header {
+            background: rgba(17, 24, 39, 0.85);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--primary);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: white;
+            padding: 2px;
+            box-shadow: var(--shadow);
+        }
+
+        [data-theme="dark"] .logo {
+            color: #F8FAFC;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--secondary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle,
+        .menu-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .menu-toggle {
+            display: none;
+        }
+
+        /* Mobile Nav Drawer */
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            gap: 1rem;
+        }
+
+        .mobile-nav.open {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            padding: 0.5rem 0;
+        }
+
+        /* Main View Container */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 80vh;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.35s ease forwards;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 4rem 0;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        [data-theme="dark"] .hero-content h1 {
+            color: #F8FAFC;
+        }
+
+        .hero-content h1 span {
+            color: var(--secondary);
+        }
+
+        .hero-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.75rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .hero-card {
+            background: var(--card);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .hero-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 4rem 0;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Sections General */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        [data-theme="dark"] .section-title h2 {
+            color: #F8FAFC;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* Cards Grid */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card i {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Edukasi View */
+        .edu-search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .edu-search-bar input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        /* FULL ARTICLE READER VIEW (Halaman Baca Materi Panjang) */
+        .article-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .article-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-badge {
+            display: inline-block;
+            background: rgba(13, 148, 136, 0.15);
+            color: var(--secondary);
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .article-header h1 {
+            font-size: 2.1rem;
+            color: var(--primary);
+            line-height: 1.3;
+            margin-bottom: 0.75rem;
+        }
+
+        [data-theme="dark"] .article-header h1 {
+            color: #F8FAFC;
+        }
+
+        .article-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .article-body {
+            font-size: 1.05rem;
+            color: var(--text);
+        }
+
+        .article-body p {
+            margin-bottom: 1.25rem;
+            color: var(--text);
+            text-align: justify;
+        }
+
+        .article-body h3 {
+            font-size: 1.35rem;
+            color: var(--secondary);
+            margin: 2rem 0 0.75rem;
+        }
+
+        .article-body ul,
+        .article-body ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.65rem;
+        }
+
+        .tip-box {
+            background: var(--bg);
+            border-left: 4px solid var(--secondary);
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 2rem 0;
+        }
+
+        .tip-box h4 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-nav-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Lapor View */
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--secondary);
+        }
+
+        /* Bantuan View */
+        .help-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem;
+            border-radius: var(--radius);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .help-banner h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .help-banner p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            opacity: 0.9;
+        }
+
+        /* Admin View */
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .table-container {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow-x: auto;
+            box-shadow: var(--shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: var(--bg);
+            font-weight: 600;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .status-selesai {
+            background: #DCFCE7;
+            color: #16A34A;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            background: var(--card);
+            margin-top: 4rem;
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 4000;
+            transform: translateY(150%);
+            transition: transform 0.3s ease;
+        }
+
+        [data-theme="dark"] #toast {
+            background: #1E293B;
+            border: 1px solid var(--border);
+        }
+
+        #toast.show {
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media(max-width: 968px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+                padding: 2rem 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero-btns {
+                justify-content: center;
+            }
+
+            .stats-grid,
+            .grid-3,
+            .admin-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .form-container,
+            .article-container {
+                padding: 1.5rem;
+            }
+
+            .article-header h1 {
+                font-size: 1.65rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="switchView('home'); return false;">
+                <img src="WhatsApp Image 2026-11-11 at 20.16.05.jpeg" alt="Logo SMK An-Nur"
+                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%230D9488\'/><text x=\'50\' y=\'55\' fill=\'white\' font-size=\'30\' text-anchor=\'middle\' font-family=\'Arial\' font-weight=\'bold\'>A</text></svg>'">
+                <span>RUANG AMAN <small
+                        style="display: block; font-size: 0.65rem; color: var(--secondary); font-weight: 500;">SMK
+                        AN-NUR DEPOK</small></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="switchView('home'); return false;" class="nav-link active"
+                        data-target="home">Beranda</a></li>
+                <li><a href="#" onclick="switchView('edukasi'); return false;" class="nav-link"
+                        data-target="edukasi">Edukasi</a></li>
+                <li><a href="#" onclick="switchView('lapor'); return false;" class="nav-link"
+                        data-target="lapor">Lapor</a></li>
+                <li><a href="#" onclick="switchView('bantuan'); return false;" class="nav-link"
+                        data-target="bantuan">Pusat Bantuan</a></li>
+                <li><a href="#" onclick="switchView('admin'); return false;" class="nav-link" data-target="admin"><i
+                            class="fa-solid fa-lock"></i> Admin Demo</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggleBtn" title="Ganti Tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="menu-toggle" id="menuToggleBtn" title="Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#" onclick="switchView('home'); toggleMobileNav(); return false;">Beranda</a>
+            <a href="#" onclick="switchView('edukasi'); toggleMobileNav(); return false;">Edukasi</a>
+            <a href="#" onclick="switchView('lapor'); toggleMobileNav(); return false;">Lapor</a>
+            <a href="#" onclick="switchView('bantuan'); toggleMobileNav(); return false;">Pusat Bantuan</a>
+            <a href="#" onclick="switchView('admin'); toggleMobileNav(); return false;">Admin Demo</a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main>
+        <!-- 1. HOME VIEW -->
+        <section id="view-home" class="view-section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Sekolah Aman Dimulai dari <span>Kita.</span></h1>
+                    <p>Platform digital interaktif resmi SMK AN-NUR Pasirputih Sawangan Depok untuk mengenali, mencegah,
+                        dan melaporkan perundungan secara aman.</p>
+                    <div class="hero-btns">
+                        <button class="btn btn-primary" onclick="switchView('edukasi')">
+                            Pelajari Bullying <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-outline" onclick="switchView('lapor')">
+                            Laporkan Kejadian
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <img src="WhatsApp Image 2026-11-11 at 20.16.05.jpeg" alt="Logo Yayasan"
+                        onerror="this.style.display='none'">
+                    <h3>SMK AN-NUR DEPOK</h3>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">Berani Peduli, Berani
+                        Melindungi. Ciptakan ekosistem sekolah ramah anak & bebas bullying.</p>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 class="counter" data-target="6">0</h3>
+                    <p>Modul Edukasi Lengkap</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="counter" data-target="100">0</h3>
+                    <p>% Privasi & Anonim Terjaga</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="counter" data-target="24">0</h3>
+                    <p>Jam Siap Membantu</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="counter" data-target="500">0</h3>
+                    <p>Siswa Terlindungi</p>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 5rem;">
+                <h2>Bentuk-Bentuk Bullying</h2>
+                <p>Kenali berbagai jenis perundungan agar kita bisa mencegahnya sejak dini di lingkungan sekolah.</p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div>
+                        <i class="fa-solid fa-hand-fist"></i>
+                        <h3>Bullying Fisik</h3>
+                        <p>Tindakan menyakiti fisik secara langsung seperti memukul, menendang, mendorong, atau merusak
+                            barang milik orang lain.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-open-article" data-index="1"
+                        style="width: 100%;">Baca Materi Lengkap</button>
+                </div>
+                <div class="card">
+                    <div>
+                        <i class="fa-solid fa-comments"></i>
+                        <h3>Bullying Verbal</h3>
+                        <p>Menggunakan kata-kata untuk merendahkan, mengejek, memanggil nama julukan buruk, mengancam,
+                            atau mempermalukan korban.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-open-article" data-index="2"
+                        style="width: 100%;">Baca Materi Lengkap</button>
+                </div>
+                <div class="card">
+                    <div>
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <h3>Cyberbullying</h3>
+                        <p>Perundungan yang terjadi melalui media digital, media sosial, grup chat, seperti menyebar
+                            hoax atau komentar kebencian.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-open-article" data-index="3"
+                        style="width: 100%;">Baca Materi Lengkap</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. EDUKASI LIST VIEW -->
+        <section id="view-edukasi" class="view-section">
+            <div class="section-title">
+                <h2>Pusat Edukasi Anti-Bullying</h2>
+                <p>Pilih materi di bawah ini untuk membaca pembahasan lengkap dan panduan praktisnya.</p>
+            </div>
+            <div class="edu-search-bar">
+                <input type="text" id="searchEdu"
+                    placeholder="Cari materi edukasi (misal: fisik, verbal, cyberbullying)..." oninput="filterEdu()">
+            </div>
+            <div class="grid-3" id="eduGrid">
+                <div class="card edu-item" data-title="Pengertian Bullying">
+                    <div>
+                        <i class="fa-solid fa-book-open"></i>
+                        <h3>1. Pengertian Bullying</h3>
+                        <p>Bullying adalah perilaku agresif yang disengaja dan dilakukan secara berulang oleh seseorang
+                            atau kelompok terhadap korban yang lebih lemah.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-open-article" data-index="0">Baca Selengkapnya <i
+                            class="fa-solid fa-book-reader"></i></button>
+                </div>
+                <div class="card edu-item" data-title="Bullying Fisik">
+                    <div>
+                        <i class="fa-solid fa-hand-fist"></i>
+                        <h3>2. Bullying Fisik</h3>
+                        <p>Bentuk kekerasan fisik langsung yang melukai tubuh, merusak barang, atau membuat korban
+                            merasa tidak aman secara fisik.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-open-article" data-index="1">Baca Selengkapnya <i
+                            class="fa-solid fa-book-reader"></i></button>
+                </div>
+                <div class="card edu-item" data-title="Bullying Verbal">
+                    <div>
+                        <i class="fa-solid fa-comment-slash"></i>
+                        <h3>3. Bullying Verbal</h3>
+                        <p>Pemanfaatan kata-kata lisan untuk mencaci maki, menghina, memberikan julukan negatif, atau
+                            menebar ancaman psikologis.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-open-article" data-index="2">Baca Selengkapnya <i
+                            class="fa-solid fa-book-reader"></i></button>
+                </div>
+                <div class="card edu-item" data-title="Cyberbullying">
+                    <div>
+                        <i class="fa-solid fa-globe"></i>
+                        <h3>4. Cyberbullying</h3>
+                        <p>Perundungan lewat dunia maya, komentar negatif di media sosial, pengiriman pesan teror, atau
+                            penyebaran foto pribadi tanpa izin.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-open-article" data-index="3">Baca Selengkapnya <i
+                            class="fa-solid fa-book-reader"></i></button>
+                </div>
+                <div class="card edu-item" data-title="Dampak Bullying">
+                    <div>
+                        <i class="fa-solid fa-heart-crack"></i>
+                        <h3>5. Dampak Bullying</h3>
+                        <p>Menimbulkan trauma mental, kecemasan berlebih (anxiety), penurunan prestasi akademik, hingga
+                            hilangnya rasa percaya diri korban.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-open-article" data-index="4">Baca Selengkapnya <i
+                            class="fa-solid fa-book-reader"></i></button>
+                </div>
+                <div class="card edu-item" data-title="Cara Menghadapi Bullying">
+                    <div>
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h3>6. Cara Menghadapi Bullying</h3>
+                        <p>Tetap tenang, tunjukkan sikap percaya diri, jauhi pelaku, catat kejadiannya, dan segera
+                            laporkan kepada guru atau pihak berwenang.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-open-article" data-index="5">Baca Selengkapnya <i
+                            class="fa-solid fa-book-reader"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2B. HALAMAN BACA ARTIKEL LENGKAP (OTOMATIS KEBUKA SAAT DIKLIK) -->
+        <section id="view-artikel" class="view-section">
+            <div style="max-width: 850px; margin: 0 auto 1.5rem;">
+                <button type="button" class="btn btn-outline" onclick="switchView('edukasi')">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Materi
+                </button>
+            </div>
+
+            <article class="article-container">
+                <div class="article-header">
+                    <span class="article-badge" id="artBadge">Modul Edukasi 1</span>
+                    <h1 id="artTitle">Judul Artikel Lengkap</h1>
+                    <div class="article-meta">
+                        <span><i class="fa-solid fa-school"></i> SMK AN-NUR Depok</span>
+                        <span><i class="fa-regular fa-clock"></i> Estimasi baca: 4 menit</span>
+                    </div>
+                </div>
+
+                <div class="article-body" id="artBody">
+                    <!-- Konten panjang akan dimuat otomatis di sini -->
+                </div>
+
+                <div class="article-nav-footer">
+                    <button type="button" class="btn btn-outline" id="btnPrevArt">
+                        <i class="fa-solid fa-chevron-left"></i> Materi Sebelumnya
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="switchView('lapor')">
+                        <i class="fa-solid fa-shield-heart"></i> Laporkan Kejadian
+                    </button>
+                    <button type="button" class="btn btn-outline" id="btnNextArt">
+                        Materi Berikutnya <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </article>
+        </section>
+
+        <!-- 3. LAPOR VIEW -->
+        <section id="view-lapor" class="view-section">
+            <div class="form-container">
+                <div class="section-title" style="margin-bottom: 2rem;">
+                    <h2>Formulir Pengaduan Simulasi</h2>
+                    <p>Lapor secara rahasia di SMK AN-NUR. Data disimpan aman di perangkat lokal (localStorage) untuk
+                        keperluan demo.</p>
+                </div>
+                <form id="reportForm" onsubmit="handleReportSubmit(event)">
+                    <div class="form-group">
+                        <label>Jenis Bullying</label>
+                        <select id="reportCategory" required>
+                            <option value="">Pilih Jenis Bullying</option>
+                            <option value="Fisik">Bullying Fisik</option>
+                            <option value="Verbal">Bullying Verbal</option>
+                            <option value="Sosial">Bullying Sosial</option>
+                            <option value="Cyberbullying">Cyberbullying</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Lokasi Kejadian</label>
+                        <input type="text" id="reportLocation" placeholder="Contoh: Kantin SMK An-Nur / Kelas PPLG / PM "
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>Waktu Kejadian</label>
+                        <input type="datetime-local" id="reportTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Status Pelapor</label>
+                        <select id="reportStatus" required>
+                            <option value="Korban">Saya Korban</option>
+                            <option value="Saksi">Saya Saksi Mata</option>
+                            <option value="Pihak Peduli">Pihak yang Ingin Membantu</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Deskripsi Kejadian</label>
+                        <textarea id="reportDesc" rows="4" placeholder="Ceritakan kronologi singkat secara jelas..."
+                            required></textarea>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="isAnonymous" checked>
+                        <label for="isAnonymous" style="margin-bottom: 0;">Kirim sebagai Anonim (Identitas
+                            Dirahasiakan)</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Laporan Simulasi
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 4. BANTUAN VIEW -->
+        <section id="view-bantuan" class="view-section">
+            <div class="help-banner">
+                <h2>Pusat Bantuan & Konseling SMK AN-NUR</h2>
+                <p>Anda tidak sendiri. Guru BK dan konselor sekolah siap mendengarkan dan mendampingi Anda kapanpun
+                    dibutuhkan.</p>
+                <button class="btn btn-primary" style="background: white; color: #0F172A;"
+                    onclick="showToast('Menghubungkan ke Guru BK SMK An-Nur...')">Hubungi Guru BK</button>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div>
+                        <i class="fa-solid fa-user-tie"></i>
+                        <h3>Panduan Bicara pada Guru</h3>
+                        <p>Siapkan catatan kecil kejadian, pilih waktu istirahat yang tepat, dan bicaralah secara
+                            terbuka kepada Wali Kelas atau Guru BK.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <i class="fa-solid fa-users"></i>
+                        <h3>Peran Teman Sebaya (Upstander)</h3>
+                        <p>Jangan hanya diam saat melihat teman dirundung. Ajak korban menjauh atau beritahu guru
+                            sesegera mungkin.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div>
+                        <i class="fa-solid fa-headset"></i>
+                        <h3>Layanan Konseling Sekolah</h3>
+                        <p>Ruang BK SMK AN-NUR Pasirputih - Sawangan, Depok terbuka setiap hari kerja.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ADMIN DEMO VIEW -->
+        <section id="view-admin" class="view-section">
+            <div class="section-title">
+                <h2>Dashboard Admin (Demo Simulasi)</h2>
+                <p>Memantau laporan pengaduan masuk yang tersimpan secara lokal pada browser.</p>
+            </div>
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3 id="statTotalReports">0</h3>
+                    <p>Total Laporan Masuk</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="statPending">0</h3>
+                    <p>Belum Ditindaklanjuti</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="statResolved">0</h3>
+                    <p>Selesai Ditangani</p>
+                </div>
+            </div>
+            <div style="margin-bottom: 1.5rem; display: flex; justify-content: flex-end;">
+                <button class="btn btn-outline" onclick="clearReports()" style="border-color: #EF4444; color: #EF4444;">
+                    <i class="fa-solid fa-trash"></i> Bersihkan Data Demo
+                </button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Kategori</th>
+                            <th>Lokasi</th>
+                            <th>Status Pelapor</th>
+                            <th>Status Kasus</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        <!-- Data will be loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 RUANG AMAN — SMK AN-NUR Pasirputih Sawangan Kota Depok. Dibuat dengan penuh kepedulian.</p>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast">
+        <i class="fa-solid fa-circle-check" style="color: #38BDF8;"></i>
+        <span id="toastMsg">Notifikasi berhasil!</span>
+    </div>
+
+    <!-- JavaScript Implementation -->
+    <script>
+        // DATABASE MATERI EDUKASI LENGKAP & PANJANG
+        const eduArticles = [
+            {
+                badge: "Modul 1 — Dasar Pemahaman",
+                title: "Pengertian Bullying (Perundungan) Secara Mendalam",
+                content: `
+                    <p><strong>Bullying</strong> atau dalam bahasa Indonesia dikenal sebagai <strong>perundungan</strong>, adalah segala bentuk penindasan, intimidasi, atau kekerasan yang dilakukan dengan sengaja oleh satu orang atau sekelompok orang yang merasa lebih kuat, lebih berkuasa, atau lebih dominan terhadap orang lain yang dianggap lebih lemah.</p>
+                    <p>Banyak orang sering menyalahartikan bullying sebagai sekadar "bercanda" atau "kenakalan remaja biasa". Padahal, terdapat garis batas yang sangat tegas antara candaan yang sehat dengan perilaku bullying. Dalam candaan yang sehat, kedua belah pihak sama-sama tertawa dan tidak ada pihak yang merasa direndahkan atau tersakiti.</p>
+                    
+                    <h3>Tiga Unsur Utama Perilaku Bullying</h3>
+                    <ul>
+                        <li><strong>Kesengajaan untuk Menyakiti (Intentional):</strong> Pelaku melakukan tindakannya secara sadar dengan tujuan membuat korban merasa takut, malu, sedih, atau terluka secara fisik maupun mental.</li>
+                        <li><strong>Ketidakseimbangan Kekuatan (Power Imbalance):</strong> Terdapat perbedaan kekuatan yang mencolok antara pelaku dan korban. Kekuatan ini bisa berupa ukuran fisik yang lebih besar, jumlah anggota kelompok (geng), senioritas (kakak kelas terhadap adik kelas), maupun popularitas di sekolah.</li>
+                        <li><strong>Dilakukan Secara Berulang (Repetitive):</strong> Tindakan perundungan bukan hanya terjadi satu kali secara kebetulan, melainkan pola perilaku yang terjadi terus-menerus dalam jangka waktu tertentu sehingga menciptakan trauma berkepanjangan bagi korban.</li>
+                    </ul>
+
+                    <h3>Mengapa Bullying Harus Dihentikan di Sekolah?</h3>
+                    <p>Sekolah adalah rumah kedua bagi setiap siswa untuk menuntut ilmu, mengembangkan bakat, dan membangun karakter. Jika lingkungan sekolah membiarkan praktik bullying tumbuh, maka hak dasar siswa untuk merasa aman akan hilang. Budaya saling menghormati di <strong>SMK AN-NUR Pasirputih Depok</strong> harus terus dijaga agar setiap siswa dapat meraih prestasi terbaiknya tanpa rasa takut.</p>
+
+                    <div class="tip-box">
+                        <h4><i class="fa-solid fa-lightbulb"></i> Ingat Prinsip Ini!</h4>
+                        <p style="margin-bottom:0;">Bercanda itu membuat orang lain tertawa bersama kita, bukan menertawakan penderitaan orang lain. Jika temanmu sudah terlihat tidak nyaman, sedih, atau marah, segera hentikan!</p>
+                    </div>
+                `
+            },
+            {
+                badge: "Modul 2 — Kekerasan Langsung",
+                title: "Bullying Fisik: Mengenali Bentuk dan Cara Menghentikannya",
+                content: `
+                    <p><strong>Bullying fisik</strong> adalah jenis perundungan yang melibatkan kontak tubuh secara langsung maupun tindakan merusak properti milik korban. Jenis bullying ini adalah yang paling mudah terlihat secara kasat mata karena sering kali meninggalkan bekas luka fisik atau kerusakan barang.</p>
+                    <p>Meskipun mudah dikenali, banyak korban bullying fisik di sekolah yang enggan melapor karena mendapat ancaman balasan yang lebih keras dari pelaku apabila berani mengadu kepada guru atau orang tua.</p>
+
+                    <h3>Contoh Nyata Bullying Fisik di Lingkungan Sekolah</h3>
+                    <ul>
+                        <li><strong>Kekerasan Terhadap Tubuh:</strong> Memukul, menendang, menampar, mendorong dengan kasar di lorong kelas, menjegal kaki saat korban berjalan, mencubit, hingga meludahi korban.</li>
+                        <li><strong>Perusakan & Perampasan Barang:</strong> Menyembunyikan tas atau sepatu teman, merobek buku catatan, mematahkan alat tulis, atau meminta uang jajan secara paksa (pemalakan).</li>
+                        <li><strong>Kontak Fisik yang Merendahkan:</strong> Menarik kerudung atau pakaian teman dengan sengaja, menoyor kepala, atau mengunci korban di dalam kamar mandi/kelas.</li>
+                    </ul>
+
+                    <h3>Langkah Praktis Jika Mengalami atau Melihat Bullying Fisik</h3>
+                    <ol>
+                        <li><strong>Jangan Membalas dengan Kekerasan:</strong> Membalas pukulan hanya akan memicu perkelahian yang lebih besar dan menempatkan Anda dalam posisi bersalah di mata tata tertib sekolah.</li>
+                        <li><strong>Segera Menjauh ke Tempat Ramai:</strong> Larilah atau berjalan cepat menuju ruang guru, ruang BK, pos satpam, atau keramaian siswa lain agar pelaku mengurungkan niatnya.</li>
+                        <li><strong>Dokumentasikan Luka atau Kerusakan:</strong> Jika mengalami luka memar atau barang yang dirusak, segera foto sebagai bukti kuat untuk ditunjukkan kepada Wali Kelas atau Guru BK.</li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <h4><i class="fa-solid fa-shield-halved"></i> Pesan Keamanan</h4>
+                        <p style="margin-bottom:0;">Kekerasan fisik di lingkungan pendidikan melanggar aturan sekolah serta hukum perlindungan anak. Jangan pernah ragu melapor kepada Guru BK SMK AN-NUR Depok.</p>
+                    </div>
+                `
+            },
+            {
+                badge: "Modul 3 — Kekerasan Lisan & Psikologis",
+                title: "Bullying Verbal: Luka Tak Terlihat yang Membekas Lama",
+                content: `
+                    <p><strong>Bullying verbal</strong> adalah bentuk perundungan yang dilakukan melalui ucapan, kata-kata, julukan, atau tulisan yang bertujuan menghina, merendahkan, dan menyakiti perasaan seseorang. Banyak pelaku berlindung di balik kalimat <em>"Ah, baper amat, cuma bercanda doang!"</em> untuk membenarkan ucapan kasar mereka.</p>
+                    <p>Faktanya, penelitian psikologi menunjukkan bahwa luka emosional akibat kata-kata kasar dapat bertahan jauh lebih lama dibandingkan luka fisik dan mampu menghancurkan rasa percaya diri seorang pelajar.</p>
+
+                    <h3>Bentuk-Bentuk Bullying Verbal yang Sering Terjadi</h3>
+                    <ul>
+                        <li><strong>Body Shaming & Penghinaan Fisik:</strong> Mengejek bentuk tubuh, warna kulit, tinggi badan, atau gaya berpakaian teman.</li>
+                        <li><strong>Name-Calling (Pemberian Julukan Buruk):</strong> Memanggil teman bukan dengan nama aslinya, melainkan dengan julukan yang merendahkan atau memanggil nama orang tua sebagai bahan olok-olokan.</li>
+                        <li><strong>Intimidasi & Ancaman:</strong> Mengucapkan kalimat ancaman seperti <em>"Awas lo pulang sekolah nanti!"</em> atau memaksa teman mengerjakan tugas sekolah dengan ancaman.</li>
+                        <li><strong>Cemoohan & Sarkasme Menyakitkan:</strong> Menertawakan teman saat sedang presentasi di depan kelas atau saat salah menjawab pertanyaan guru.</li>
+                    </ul>
+
+                    <h3>Cara Menghadapi Bullying Verbal dengan Elegan</h3>
+                    <ul>
+                        <li><strong>Tunjukkan Sikap Tenang dan Tegas:</strong> Pelaku bullying verbal sangat senang jika melihat korban marah atau menangis. Tatap matanya dengan tenang, katakan dengan tegas <em>"Saya tidak suka kamu bicara seperti itu"</em>, lalu tinggalkan tempat tersebut.</li>
+                        <li><strong>Bangun Lingkungan Pertemanan Positif:</strong> Kelilingi diri Anda dengan teman-teman yang saling mendukung dan menghargai.</li>
+                        <li><strong>Ceritakan kepada Orang Terpercaya:</strong> Jangan memendam rasa sakit hati sendirian. Bicaralah dengan orang tua atau Guru BK.</li>
+                    </ul>
+                `
+            },
+            {
+                badge: "Modul 4 — Perundungan Era Digital",
+                title: "Cyberbullying: Bahaya Perundungan di Media Sosial & Grup Chat",
+                content: `
+                    <p><strong>Cyberbullying</strong> adalah tindakan perundungan yang dilakukan melalui perangkat digital seperti smartphone, media sosial (Instagram, TikTok, WhatsApp, X), maupun platform game online. Berbeda dengan bullying tradisional yang berhenti saat jam sekolah usai, cyberbullying dapat menyerang korban <strong>24 jam sehari</strong> di mana pun ia berada.</p>
+                    <p>Jejak digital yang ditinggalkan oleh cyberbullying sangat sulit dihapus dan dapat dilihat oleh ratusan hingga ribuan orang dalam waktu singkat, sehingga menimbulkan rasa malu yang luar biasa bagi korban.</p>
+
+                    <h3>Contoh Kasus Cyberbullying di Kalangan Pelajar</h3>
+                    <ul>
+                        <li><strong>Komentar Kebencian (Hate Speech):</strong> Menuliskan komentar bernada menghina, mencaci maki, atau mempermalukan di kolom komentar foto/video teman.</li>
+                        <li><strong>Penyebaran Aib & Foto Tanpa Izin:</strong> Mengambil foto atau video teman secara diam-diam saat berada dalam posisi memalukan lalu menyebarkannya ke grup WhatsApp kelas atau membuat stiker WhatsApp dari wajah teman tanpa izin.</li>
+                        <li><strong>Pengucilan Digital:</strong> Mengeluarkan seseorang dari grup chat kelas secara sengaja atau membuat grup chat khusus untuk membicarakan keburukan satu orang.</li>
+                        <li><strong>Doxing & Akun Palsu:</strong> Menyebarkan nomor telepon atau alamat pribadi seseorang ke publik tanpa izin, atau membuat akun palsu untuk menipu dan merusak nama baik orang lain.</li>
+                    </ul>
+
+                    <h3>Langkah Cerdas Melawan Cyberbullying</h3>
+                    <ol>
+                        <li><strong>Jangan Terpancing Membalas:</strong> Membalas komentar kasar di media sosial hanya akan memperpanjang perdebatan dan memperkeruh keadaan.</li>
+                        <li><strong>Ambil Tangkapan Layar (Screenshot):</strong> Simpan semua bukti chat, komentar, URL profil pelaku, serta waktu kejadian sebagai barang bukti digital yang sah.</li>
+                        <li><strong>Gunakan Fitur Blokir & Laporkan (Block & Report):</strong> Putus akses pelaku agar tidak bisa lagi menghubungi atau melihat akun media sosial Anda.</li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <h4><i class="fa-solid fa-scale-balanced"></i> Peringatan Hukum</h4>
+                        <p style="margin-bottom:0;">Tindakan penghinaan, pencemaran nama baik, dan penyebaran konten tanpa izin di dunia maya diatur dalam <strong>UU ITE (Informasi dan Transaksi Elektronik)</strong> dan memiliki konsekuensi hukum yang serius.</p>
+                    </div>
+                `
+            },
+            {
+                badge: "Modul 5 — Konsekuensi Psikologis & Sosial",
+                title: "Dampak Buruk Bullying Bagi Korban, Pelaku, dan Lingkungan Sekolah",
+                content: `
+                    <p>Banyak orang mengira dampak bullying hanya dirasakan oleh korban pada saat kejadian berlangsung. Kenyataannya, perundungan memberikan efek domino yang merusak masa depan <strong>korban</strong>, menghancurkan karakter <strong>pelaku</strong>, serta merusak reputasi <strong>sekolah</strong>.</p>
+
+                    <h3>1. Dampak Bagi Korban</h3>
+                    <ul>
+                        <li><strong>Gangguan Kesehatan Mental:</strong> Korban rentan mengalami gangguan kecemasan (<em>anxiety disorder</em>), depresi berkepanjangan, trauma sosial, hingga kehilangan kepercayaan diri untuk bersosialisasi.</li>
+                        <li><strong>Penurunan Prestasi Akademik:</strong> Rasa takut yang terus menghantui membuat korban sulit berkonsentrasi saat guru mengajar, sering membolos karena takut bertemu pelaku, hingga nilai rapor menurun drastis.</li>
+                        <li><strong>Gangguan Kesehatan Fisik (Psikosomatis):</strong> Stres berat memicu sakit kepala berkepanjangan, gangguan pola tidur (insomnia), serta menurunnya nafsu makan.</li>
+                    </ul>
+
+                    <h3>2. Dampak Bagi Pelaku Bullying</h3>
+                    <p>Jika tidak segera dibina dan dihentikan, pelaku bullying akan tumbuh dengan keyakinan keliru bahwa kekerasan adalah cara yang sah untuk mendapatkan apa yang diinginkan. Di masa depan, pelaku berisiko tinggi terlibat dalam tindakan kriminal, sulit bekerja sama dalam tim di dunia kerja, dan dijauhi oleh lingkungan masyarakat.</p>
+
+                    <h3>3. Dampak Bagi Saksi Mata (Bystander)</h3>
+                    <p>Siswa yang sering melihat teman dirundung namun tidak berdaya menolong akan mengalami rasa bersalah, ketakutan bahwa dirinya akan menjadi target berikutnya, dan menurunkan rasa empati di lingkungan sekolah.</p>
+                `
+            },
+            {
+                badge: "Modul 6 — Panduan Aksi Nyata",
+                title: "Cara Menghadapi Bullying & Menjadi Teman Pelindung (Upstander)",
+                content: `
+                    <p>Menghentikan budaya bullying membutuhkan keberanian dari seluruh warga sekolah. Kita tidak boleh hanya menjadi penonton pasif (<em>bystander</em>) yang diam saat melihat ketidakadilan terjadi di depan mata.</p>
+
+                    <h3>Panduan Jika Anda Menjadi Korban Bullying</h3>
+                    <ul>
+                        <li><strong>Sadarilah Bahwa Ini Bukan Salah Anda:</strong> Jangan pernah menyalahkan diri sendiri atas perilaku buruk pelaku. Anda berhak diperlakukan dengan hormat.</li>
+                        <li><strong>Simpan Catatan Kronologi:</strong> Tuliskan tanggal, jam, lokasi kejadian, siapa saja yang terlibat, dan apa yang terjadi secara rinci.</li>
+                        <li><strong>Berani Bicara dan Melapor:</strong> Segera ceritakan kepada Wali Kelas, Guru BK, atau orang tua di rumah. Anda juga dapat memanfaatkan fitur <strong>Lapor</strong> di aplikasi RUANG AMAN ini.</li>
+                    </ul>
+
+                    <h3>Cara Menjadi Upstander (Teman yang Berani Melindungi)</h3>
+                    <ol>
+                        <li><strong>Jangan Ikut Menertawakan:</strong> Menertawakan aksi pelaku sama saja dengan memberikan dukungan moral kepadanya untuk terus menindas korban.</li>
+                        <li><strong>Dampingi dan Kuatkan Korban:</strong> Ajak korban pergi menjauh dari pelaku (misalnya mengajak ke kantin atau ke ruang guru), dan katakan padanya bahwa ia tidak sendirian.</li>
+                        <li><strong>Laporkan kepada Guru:</strong> Jika situasi berbahaya atau melibatkan kekerasan fisik, segera panggil guru terdekat atau laporkan ke ruang BK agar segera ditangani secara profesional.</li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <h4><i class="fa-solid fa-heart"></i> Tagline RUANG AMAN SMK AN-NUR Depok</h4>
+                        <p style="margin-bottom:0;"><strong>"Berani Peduli, Berani Melindungi."</strong> Satu langkah keberanianmu untuk peduli hari ini bisa menyelamatkan masa depan seorang teman!</p>
+                    </div>
+                `
+            }
+        ];
+
+        let currentArticleIndex = 0;
+
+        // Switch Views Function
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+
+            const targetView = document.getElementById(`view-${viewId}`);
+            if (targetView) {
+                targetView.classList.add('active');
+            }
+
+            // Highlight menu Edukasi jika sedang membuka halaman baca artikel
+            const navTarget = viewId === 'artikel' ? 'edukasi' : viewId;
+            const targetNav = document.querySelector(`.nav-link[data-target="${navTarget}"]`);
+            if (targetNav) {
+                targetNav.classList.add('active');
+            }
+
+            window.scrollTo({top: 0, behavior: 'smooth'});
+
+            if (viewId === 'admin') {
+                loadAdminData();
+            }
+        }
+
+        // Fungsi Membuka Halaman Baca Artikel Lengkap
+        function openArticle(index) {
+            if (index < 0 || index >= eduArticles.length) return;
+            currentArticleIndex = index;
+            const article = eduArticles[index];
+
+            document.getElementById('artBadge').innerText = article.badge;
+            document.getElementById('artTitle').innerText = article.title;
+            document.getElementById('artBody').innerHTML = article.content;
+
+            // Atur tombol Sebelumnya & Berikutnya
+            const btnPrev = document.getElementById('btnPrevArt');
+            const btnNext = document.getElementById('btnNextArt');
+
+            btnPrev.style.visibility = index === 0 ? 'hidden' : 'visible';
+            btnNext.style.visibility = index === eduArticles.length - 1 ? 'hidden' : 'visible';
+
+            switchView('artikel');
+        }
+
+        // Event Listener Otomatis untuk semua tombol "Baca Selengkapnya"
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-open-article');
+            if (btn) {
+                const index = parseInt(btn.getAttribute('data-index'), 10);
+                openArticle(index);
+            }
+        });
+
+        document.getElementById('btnPrevArt').addEventListener('click', () => {
+            if (currentArticleIndex > 0) openArticle(currentArticleIndex - 1);
+        });
+
+        document.getElementById('btnNextArt').addEventListener('click', () => {
+            if (currentArticleIndex < eduArticles.length - 1) openArticle(currentArticleIndex + 1);
+        });
+
+        // Toggle Mobile Navigation
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        if (menuToggleBtn) {
+            menuToggleBtn.addEventListener('click', toggleMobileNav);
+        }
+        function toggleMobileNav() {
+            mobileNav.classList.toggle('open');
+        }
+
+        // Toast Notification Trigger
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Dark / Light Theme Toggle
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // Initialize saved theme & animations
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+            animateCounters();
+        });
+
+        // Animated Counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                let count = 0;
+                const speed = Math.max(1, target / 30);
+                const updateCount = () => {
+                    count += speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count);
+                        setTimeout(updateCount, 40);
+                    } else {
+                        counter.innerText = target + (target === 100 ? '%' : target === 500 ? '+' : '');
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // Filter Edukasi Cards
+        function filterEdu() {
+            const query = document.getElementById('searchEdu').value.toLowerCase();
+            const items = document.querySelectorAll('.edu-item');
+            items.forEach(item => {
+                const title = item.getAttribute('data-title').toLowerCase();
+                if (title.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Handle Report Submission (Local Storage)
+        function handleReportSubmit(e) {
+            e.preventDefault();
+            const category = document.getElementById('reportCategory').value;
+            const location = document.getElementById('reportLocation').value;
+            const time = document.getElementById('reportTime').value;
+            const status = document.getElementById('reportStatus').value;
+            const desc = document.getElementById('reportDesc').value;
+            const isAnonymous = document.getElementById('isAnonymous').checked;
+
+            const reports = JSON.parse(localStorage.getItem('ruang_aman_reports') || '[]');
+            const newReport = {
+                id: 'RA-' + Math.floor(1000 + Math.random() * 9000),
+                category,
+                location,
+                time,
+                statusPelapor: status,
+                desc,
+                isAnonymous,
+                reportStatus: 'Pending',
+                createdAt: new Date().toLocaleDateString('id-ID')
+            };
+
+            reports.push(newReport);
+            localStorage.setItem('ruang_aman_reports', JSON.stringify(reports));
+
+            showToast('Laporan berhasil dikirim secara simulasi!');
+            document.getElementById('reportForm').reset();
+            switchView('admin');
+        }
+
+        // Load Admin Data
+        function loadAdminData() {
+            const reports = JSON.parse(localStorage.getItem('ruang_aman_reports') || '[]');
+            const tbody = document.getElementById('adminTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const statTotal = document.getElementById('statTotalReports');
+            const statPending = document.getElementById('statPending');
+            const statResolved = document.getElementById('statResolved');
+
+            if (statTotal) statTotal.innerText = reports.length;
+            if (statPending) statPending.innerText = reports.filter(r => r.reportStatus === 'Pending').length;
+            if (statResolved) statResolved.innerText = reports.filter(r => r.reportStatus === 'Selesai').length;
+
+            if (reports.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">Belum ada laporan simulasi masuk.</td></tr>`;
+                return;
+            }
+
+            reports.forEach((rep, index) => {
+                const badgeClass = rep.reportStatus === 'Pending' ? 'status-pending' : 'status-selesai';
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${rep.id}</strong></td>
+                        <td>${rep.category}</td>
+                        <td>${rep.location}</td>
+                        <td>${rep.statusPelapor} ${rep.isAnonymous ? '(Anonim)' : ''}</td>
+                        <td><span class="status-badge ${badgeClass}">${rep.reportStatus}</span></td>
+                        <td>
+                            <button class="btn btn-outline" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;" onclick="toggleStatus(${index})">Ubah Status</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Toggle Status in Admin
+        function toggleStatus(index) {
+            const reports = JSON.parse(localStorage.getItem('ruang_aman_reports') || '[]');
+            reports[index].reportStatus = reports[index].reportStatus === 'Pending' ? 'Selesai' : 'Pending';
+            localStorage.setItem('ruang_aman_reports', JSON.stringify(reports));
+            loadAdminData();
+            showToast('Status laporan diperbarui!');
+        }
+
+        // Clear Demo Reports
+        function clearReports() {
+            if (confirm('Yakin ingin menghapus seluruh data simulasi laporan?')) {
+                localStorage.removeItem('ruang_aman_reports');
+                loadAdminData();
+                showToast('Data demo dibersihkan.');
+            }
+        }
+    </script>
+</body>
+
+</html>
